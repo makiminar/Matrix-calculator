@@ -1,0 +1,10 @@
+OP M = 1 (3,1)
+OP M = 1 (3,3)
+OP L = 1 [3,3]
+PRINT M
+TRANS M
+PRINT M
+DET M
+HELP
+RANK M
+QUIT

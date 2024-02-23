@@ -1,0 +1,19 @@
+SCAN A [2][2]
+2 3
+4 5
+SCAN B [6][3]
+0 4 6
+9 0 0
+0 4 0
+1 4 0
+0 2 9
+8 0 0
+OP C = A + B
+OP C = A - B
+OP C = 1 (2,2)
+OP D = C + A
+OP F = C * A
+PRINT C
+PRINT D
+PRINT F
+QUIT
