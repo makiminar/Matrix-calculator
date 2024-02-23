@@ -1,0 +1,57 @@
+# MatrixMaster
+
+Úkolem je vytvořit aplikaci MatrixMaster, kterou uživatel spustí a pomocí příkazů v konzoli si může počítat matice.
+Kalkulačka umí sčítat, odčítat a násobit matice (se správnými rozměry, samozřejmě), provést Gaussovu eliminační metodu nad zadanou maticí,
+umožňuje slučovat i oříznout matice, vypočítat inverzní matici (opět, pokud je to možné), determinant a hodnost.
+Poslední funkcionalita kalkulačky je ta, že rozlišuje řídké a husté matice a tedy pro řídké matice existuje paměťově výhodnější úložiště.
+
+Příkazy a jejich použití:
+ - `SCAN M[X][Y]` vytvoří novou matici a uloží si ji do paměti. Uživatel musí zadat jméno matice (jméno proměnné, vždy 1 znak, v tomto případě 'M' ) se zvoleným jménem proměnné(v tomto případě M),
+    dále rozměry matice v hranatých závorkách, X jakožto počet řádků, Y počet sloupců a nakonec samotné prvky matice.
+ - `MERGE M N` sloučí dvě dané matice, pokud to jejich rozměry umožňují, použití i s příkazem OP - viz příkaz OP
+ - `SPLIT M [X][Y] (x, y)` ořízne danou matici, X, Y udávají rozměry nově vzniklé matice, x,y říkají, od které pozice se bude řezat
+ - `GEM M` provede  Gaussovu eliminační metodu nad danou maticí
+ - `TRANS M` provede transpozici dané matice
+ - `INV M` spočte inverzní matici dané matice
+ - `DET M` spočte determinant dané matice
+ - `RANK M` spočte hodnost dané matice
+ - `PRINT M` vypíše matici daného jména
+ - `QUIT` ukončí program
+ - `HELP` zobrazí nápovědu a použití jednotlivých příkazů
+ - `OP M = `univerzální příkaz reprezentující nějakou operaci, při které se vytváří nová matice,
+    například při sčítání matic to bude vypadat následnovně: `OP C = A + B`. To samé bude platit pro odčítání a násobení, tedy:
+    `OP C = A - B` a `OP C = A * B`.
+    Dále se tímto způsobem dá vytvořit jednotková matice: `OP C = 1 (3, 3)` , nebo lze takto sloučit matice:
+    `OP C = MERGE A B`
+
+Ukázka běhu programu:
+- SCAN X[3][3]
+
+    1 0 0
+
+    0 1 0
+
+    0 0 1
+- SCAN Y[3][3]
+
+    2 3 8
+
+    4 6 7
+
+    5 1 7
+
+- OP Z = MERGE X Y
+- GEM Z
+- SPLIT Z [3][3] (3, 0)
+- OP C = Z + Y
+- OP D = Z * Y
+- TRANS D
+- PRINT C
+- QUIT
+
+Příkazy jsou implementovány jako třídy `CCommand`, které jsou uloženy v hlavní třídě `CApplication`, která se stará o běh aplikace a zpracovávání příkazů.
+Dále obsahuje třídu `CInterface`, která se stará o komunikaci s uživatelem (vstup a výstup).
+
+`CMatrix` je abstraktní třída pro práci s maticemi, dvě implementace `CSparseMatrix` a `CDenseMatrix` pak přetěžují její abstraktní metody.
+ `COperator` je také abstraktní třída, ale pro operace sčítání (`COperatorPlus`), odčítání (`COperatorMinus`) a násobení (`COperatorMulti`, `COperatorNum`), vhodné pro další rozšiřování.
+Nakonec je zde třída `CConstants.h`, jenž slouží jako úložiště pro konstanty - především zprávy.
